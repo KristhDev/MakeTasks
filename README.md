@@ -12,6 +12,8 @@ Apartir de este punto se daran una serie de instrucciones para probar el proyect
 &nbsp;
 
 
+![MakeTasks Image 1](https://res.cloudinary.com/dzs8lf9lc/image/upload/c_scale,w_300/v1647978814/maketasks/Screenshot_20220322-134813_MakeTasks_fmz2fp.jpg) &nbsp; &nbsp; ![MakeTasks Image 2](https://res.cloudinary.com/dzs8lf9lc/image/upload/c_scale,w_300/v1647978814/maketasks/Screenshot_20220322-134841_MakeTasks_pvozty.jpg) &nbsp; &nbsp; ![MakeTasks Image 3](https://res.cloudinary.com/dzs8lf9lc/image/upload/c_scale,w_300/v1647978813/maketasks/Screenshot_20220322-134903_MakeTasks_c6zepu.jpg)
+
 ## Instrucciones de uso
 
 &nbsp;
