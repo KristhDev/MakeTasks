@@ -60,14 +60,15 @@ export const LoginForm = () => {
             style={{ 
                 ...styles.formContainer, 
                 marginTop: (height > width) ? height * 0.44 : height * 0.32,
-                height: height * 0.56
+                maxHeight: height * 0.56,
+                minHeight: height * 0.56
             }}
         >
             { /* Campo de Correo */ }
             <FormGroup 
                 icon="mail-outline"
                 inputValue={ form.email }
-                label="Correo"
+                label="Correo:"
                 onChangeText={ (text) => onChangeField(text, 'email') }
                 placeholder="Ingresa tu correo"
                 type="emailAddress"
@@ -78,7 +79,7 @@ export const LoginForm = () => {
             <FormGroup
                 icon="key-outline"
                 inputValue={ form.password }
-                label="Contraseña"
+                label="Contraseña:"
                 onChangeText={ (text) => onChangeField(text, 'password') }
                 placeholder="Ingresa tu contraseña"
                 type="password"

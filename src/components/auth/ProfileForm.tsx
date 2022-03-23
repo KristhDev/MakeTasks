@@ -94,7 +94,7 @@ export const ProfileForm = () => {
             <FormGroup
                 icon="person-outline"
                 inputValue={ form.name }
-                label="Nombre"
+                label="Nombre:"
                 onChangeText={ (text) => onChangeField(text, 'name') }
                 placeholder="Ingrese su nombre"
                 type="name"
@@ -104,7 +104,7 @@ export const ProfileForm = () => {
             <FormGroup
                 icon="mail-outline"
                 inputValue={ form.email }
-                label="Correo"
+                label="Correo:"
                 onChangeText={ (text) => onChangeField(text, 'email') }
                 placeholder="Ingrese su correo"
                 type="emailAddress"

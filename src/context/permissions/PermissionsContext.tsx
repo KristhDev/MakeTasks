@@ -21,6 +21,8 @@ export type PermissionsContextProps = {
     permissions: PermissionsState;
     askPermissions: () => Promise<void>;
     checkPermissions: () => Promise<void>;
+    permissionsError: string;
+    setPermissionsError: (error: string) => void;
 }
 
 /* Creación del contexto */

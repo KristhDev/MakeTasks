@@ -7,7 +7,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import TasksLayout from '../../layout/TasksLayout';
 
 /* Components */
+import { Fab } from '../../components/ui/Fab';
 import { ProfileForm } from '../../components/auth/ProfileForm';
+
+/* Hooks */
+import useAuth from '../../hooks/useAuth';
+import useTasks from '../../hooks/useTasks';
 
 /* Theme */
 import { colors } from '../../theme/app-theme';
@@ -19,13 +24,23 @@ interface Props extends DrawerScreenProps<any, any>{}
 const ProfileScreen = ({ navigation }: Props) => {
     const { width, height } = useWindowDimensions();
 
+    const { signOut } = useAuth();
+    const { removeTasks, removeSearchingTasks } = useTasks();
+
+    /* Función para desloguarse */
+    const handleSignOut = () => {
+        signOut();
+        removeTasks();
+        removeSearchingTasks();
+    }
+
     return (
         <KeyboardAwareScrollView
             style={{ flex: 1 }}
             showsVerticalScrollIndicator={ false }
             extraHeight={ 50 }
             enableOnAndroid
-        >
+        >    
             <TasksLayout
                 title="Perfil"
                 openDrawer={ () => navigation.openDrawer() }
@@ -33,6 +48,13 @@ const ProfileScreen = ({ navigation }: Props) => {
             >
                 { /* Formulario */ }
                 <ProfileForm />
+
+                { /* Boton para cerrar la sesión */ }
+                <Fab 
+                    onPress={ handleSignOut }
+                    icon="log-out-outline"
+                    style={{ right: 20, bottom: 20 }}
+                />
 
                 { /* Fondo */ }
                 <View 

@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
     return (
         <KeyboardAwareScrollView
-            style={{ flex: 1, paddingTop: 0 }}
+            style={{ flex: 1 }}
             showsVerticalScrollIndicator={ false }
             extraHeight={ 50 }
             enableOnAndroid

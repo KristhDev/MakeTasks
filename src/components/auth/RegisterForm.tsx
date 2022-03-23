@@ -55,13 +55,14 @@ export const RegisterForm = () => {
         <View 
             style={{ 
                 ...styles.formContainer, 
-                height: (height > width) ? 0.65 * height : 0.65 * width, 
                 marginTop: (height > width) ? 0.35 * height : 0.25 * height,
+                maxHeight: (height > width) ? 0.65 * height : 0.65 * width,
+                minHeight: (height > width) ? 0.65 * height : 0.65 * width
             }}
         >
             { /* Campo del Nombre */ }
             <FormGroup 
-                label="Nombre"
+                label="Nombre:"
                 placeholder="Ingresa tu nombre"
                 type="name"
                 onChangeText={ (text) => onChangeField(text, 'name') }
@@ -71,7 +72,7 @@ export const RegisterForm = () => {
 
             { /* Campo del Correo */ }
             <FormGroup 
-                label="Correo"
+                label="Correo:"
                 placeholder="Ingresa tu correo"
                 type="emailAddress"
                 onChangeText={ (text) => onChangeField(text, 'email') }
@@ -82,7 +83,7 @@ export const RegisterForm = () => {
 
             { /* Campo de Contraseña */ }
             <FormGroup
-                label="Contraseña"
+                label="Contraseña:"
                 placeholder="Ingresa tu contraseña"
                 type="password"
                 onChangeText={ (text) => onChangeField(text, 'password') }

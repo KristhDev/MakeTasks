@@ -7,8 +7,8 @@ import ModalScreen from '../screens/ui/ModalScreen';
 import LoadingScreen from '../screens/ui/LoadingScreen';
 
 /* Components */
-import { ModalStatus } from '../components/ui/ModalStatus';
 import { ModalPermissions } from '../components/ui/ModalPermissions';
+import { ModalStatus } from '../components/ui/ModalStatus';
 
 /* Hooks */
 import useAuth from '../hooks/useAuth';
@@ -25,26 +25,28 @@ const LinearGradientLayout: FC<{ modalOpacity?: number }> = ({ children, modalOp
     const state = getState();
 
     const { isAuthLoading } = useAuth();
-    const { permissions, askPermissions } = usePermissions();
+    const { permissionsError, setPermissionsError, askPermissions } = usePermissions();
     const { msgError, msgSuccess, removeMsgError, removeMsgSuccess } = useStatus();
     const { selectedTask } = useTasks();
-
-    /* Función para mostrar el modal de los permisos */
-    const handleShowPermissionsModal = () => {
-        return permissions.camera === 'blocked'
-            || permissions.notifications === 0;
-    }
 
     /* Función para el cierre exitoso del modal */
     const handleSuccessOnClose = () => {
         removeMsgSuccess();
-        
+
         /**
          * Evaluacion si hay una tarea seleccionada o si el indice 
          * de la pantalla es 3 (ProfileScreen)
         */
         if (selectedTask.id || state.index === 3) return;
         navigate('HomeScreen' as never);
+    }
+
+    /* Función para el cierre exitoso del modal de permisos */
+    const handleAskPermissions = async () => {
+        setPermissionsError('');
+
+        /* Preguntar por permisos */
+        await askPermissions();
     }
 
     return (
@@ -54,16 +56,18 @@ const LinearGradientLayout: FC<{ modalOpacity?: number }> = ({ children, modalOp
         >
             { /* Pantalla del modal */ }
             <ModalScreen 
-                isVisible={ handleShowPermissionsModal() }
+                isVisible={ !!permissionsError }
                 modalOpacity={ modalOpacity }
             >
 
                 { /* Modal de los permisos */ }
                 <ModalPermissions
-                    title="Está aplicación necesita permisos para funcionar correctamente"
-                    onPress={ askPermissions }
+                    title={ permissionsError }
+                    onPress={ handleAskPermissions }
+                    onCancel={ () => setPermissionsError('') }
                 />
             </ModalScreen>
+
 
             { /* Pantalla del modal */ }
             <ModalScreen 

@@ -18,6 +18,7 @@ const INITIAL_STATE: PermissionsState = {
 /* Provider para dar la información de los permisos */
 const PermissionsProvider: FC = ({ children }) => {
     const [ permissions, setPermissions ] = useState<PermissionsState>(INITIAL_STATE);
+    const [ permissionsError, setPermissionsError ] = useState<string>('');
 
     /* Función para preguntar por los permisos */
     const askPermissions = async () => {
@@ -58,8 +59,6 @@ const PermissionsProvider: FC = ({ children }) => {
      * además se puso un listener para verificar los permisos constantemente 
     */
     useEffect(() => {
-        askPermissions();
-
         /* Listener para verificar los permisos */
         const unSubscribreAppState = AppState.addEventListener('change', async (state) => {
             if (state !== 'active') return;
@@ -77,7 +76,9 @@ const PermissionsProvider: FC = ({ children }) => {
             value={{ 
                 permissions,
                 askPermissions,
-                checkPermissions
+                checkPermissions,
+                permissionsError,
+                setPermissionsError
             }}
         >
             { children }

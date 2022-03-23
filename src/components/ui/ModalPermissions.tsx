@@ -8,10 +8,11 @@ import { colors } from '../../theme/app-theme';
 interface Props {
     title: string;
     onPress: () => void;
+    onCancel: () => void;
 }
 
 /* Componente para mostrar el contenido del modal de los permisos */
-export const ModalPermissions = ({ title, onPress }: Props) => {
+export const ModalPermissions = ({ title, onPress, onCancel }: Props) => {
     return (
         <View style={ styles.modalPermissionsContainer }>
 
@@ -22,6 +23,21 @@ export const ModalPermissions = ({ title, onPress }: Props) => {
 
             { /* Botón para aceptar los permisos */ }
             <View style={ styles.modalPermissionsActions }>
+
+                { /* Botón para cancelar los permisos */ }
+                <TouchableHighlight 
+                    activeOpacity={ 1 }
+                    onPress={ onCancel }
+                    style={{ 
+                        ...styles.modalPermissionsBtn,
+                        marginRight: 10,
+                    }} 
+                    underlayColor={ colors.darkBlue } 
+                    >
+                    <Text style={ styles.modalPermissionsBtnText }>Cancelar</Text>
+                </TouchableHighlight>
+
+                { /* Botón para aceptar los permisos */ }
                 <TouchableHighlight 
                     activeOpacity={ 1 }
                     onPress={ onPress }

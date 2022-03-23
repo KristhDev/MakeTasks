@@ -12,16 +12,20 @@ const useImage = () => {
     const { isConnected } = useNetInfo();
 
     const { setMsgError } = useStatus();
-    const { permissions } = usePermissions();
+    const { permissions, setPermissionsError } = usePermissions();
 
     /* Función para verificar los permisos */
-    const handleCheckPermissions = () => {
+    const handleCheckPermissions = async () => {
         /** 
          * Evaluación de permisos de la camara y galeria, además de 
          * verificar la conexión a internet
         */
         if (permissions.camera === 'unavailable') {
-            setMsgError('Lo sentimos, pero tu dispositivo no soporta la camara');
+            setMsgError('Lo sentimos, pero tu dispositivo no soporta la camara o galeria');
+            return false;
+        }
+        else if (permissions.camera === 'denied' || permissions.camera === 'blocked') {
+            setPermissionsError('Por favor habilita los permisos de la camara o galeria');
             return false;
         }
         else if (!isConnected) {
@@ -34,7 +38,8 @@ const useImage = () => {
 
     /* Función para tomar una imagen de la galeria */
     const handleTakeImageFromLibrary = async () => {
-        if (!handleCheckPermissions()) return;
+        const isChecked = await handleCheckPermissions();
+        if (!isChecked) return;
 
         const { didCancel, assets } = await launchImageLibrary({ 
             mediaType: 'photo', 
@@ -50,7 +55,8 @@ const useImage = () => {
 
     /* Función para tomar una foto de la camara */
     const handleTakePhoto = async () => {
-        if (!handleCheckPermissions()) return;
+        const isChecked = await handleCheckPermissions();
+        if (!isChecked) return;
 
         const { didCancel, assets } = await launchCamera({ 
             mediaType: 'photo', 

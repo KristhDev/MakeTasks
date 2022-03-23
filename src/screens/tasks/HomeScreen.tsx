@@ -35,8 +35,8 @@ const HomeScreen = ({ navigation }: Props) => {
 
     const { height, width } = useWindowDimensions();
 
-    const { signOut, isAuthenticated, user } = useAuth();
-    const { loadTasks, removeTasks, removeSearchingTasks, loadSelectedTasks, isTasksLoading, selectedTasks } = useTasks();
+    const { isAuthenticated, user } = useAuth();
+    const { loadTasks, loadSelectedTasks, isTasksLoading, selectedTasks } = useTasks();
 
     /* Función para filtrar las tareas */
     const handleSelectOption = (option: Option) => {
@@ -50,12 +50,7 @@ const HomeScreen = ({ navigation }: Props) => {
         setTaskStatus(option);
     }
 
-    /* Función para desloguarse */
-    const handleSignOut = () => {
-        signOut();
-        removeTasks();
-        removeSearchingTasks();
-    }
+    
 
     /* useEffect para iniciar cargar de tareas */
     useEffect(() => {
@@ -160,13 +155,6 @@ const HomeScreen = ({ navigation }: Props) => {
                 onPress={ () => navigation.navigate('SearchScreen') }
                 icon="search-outline"
                 style={{ right: 20, bottom: 20 }}
-            />      
-
-            { /* Boton para cerrar la sesión */ }
-            <Fab 
-                onPress={ handleSignOut }
-                icon="log-out-outline"
-                style={{ left: 20, bottom: 20 }}
             />
 
             {
