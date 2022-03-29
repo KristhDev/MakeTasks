@@ -56,12 +56,10 @@ export const LoginForm = () => {
     }, [ navigation ]);
 
     return (
-        <View   
+        <View 
             style={{ 
                 ...styles.formContainer, 
-                marginTop: (height > width) ? height * 0.44 : height * 0.32,
-                maxHeight: height * 0.56,
-                minHeight: height * 0.56
+                paddingBottom: (height > width) ? height * 0.14 : width * 0.05
             }}
         >
             { /* Campo de Correo */ }
@@ -102,6 +100,7 @@ const styles = StyleSheet.create({
     formContainer: {
         alignItems: 'center',
         flex: 1,
+        justifyContent: 'flex-end',
         zIndex: 3
     }
 });

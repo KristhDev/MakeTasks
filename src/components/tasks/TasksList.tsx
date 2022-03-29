@@ -38,6 +38,7 @@ export const TasksList = ({ taskStatus, tasksType }: Props) => {
         <ScrollView 
             style={{ ...styles.taskScrollView, width }} 
             showsVerticalScrollIndicator={ false }
+            overScrollMode="never"
         >
             <View style={{ ...styles.tasksLists, width, paddingRight: 1.2 }}>
                 {/* Espaciador */}

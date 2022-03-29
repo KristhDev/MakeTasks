@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View, ViewStyle } from 'react-native';
 
 /* Components */
 import { ScreenTitle } from '../components/ui/ScreenTitle';
@@ -9,28 +9,24 @@ interface Props {
     title: string;
     navigateBtnText: string;
     colorBtn: string;
-    landscapeHeight?: number;
     onPressNavigate: () => void;
+    style?: StyleProp<ViewStyle>;
 }
 
 /* HOC para la Autenticación */
-const AuthLayout: FC<Props> = ({ title, onPressNavigate, navigateBtnText, colorBtn, landscapeHeight = 0.7, children }) => {
+const AuthLayout: FC<Props> = ({ title, onPressNavigate, navigateBtnText, colorBtn, style, children }) => {
     const { height, width } = useWindowDimensions();
 
     return (
-        <View 
-            style={{ 
-                flex: 1, 
-                height: (height > width) ? height : width * landscapeHeight,
-                bottom: 0
-            }}
-        >
+        <View style={{ flex: 1, ...style as ViewStyle }}>
+
             { /* Titulo o nombre de la screen */ }
             <ScreenTitle 
                 title={ title }
                 styleTitleContainer={{ 
                     top: (height > width) ? -120 : -150,
-                    width: 300
+                    width: 300,
+                    position: 'absolute',
                 }}
                 styleTitleText={{
                     top: (height > width) ? 120 : 150,

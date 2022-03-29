@@ -12,6 +12,7 @@ import { colors } from '../theme/app-theme';
 interface Props {
     title: string;
     openDrawer: () => void;
+    style?: StyleProp<ViewStyle>;
     headerContainerStyle?: StyleProp<ViewStyle>;
 }
 
@@ -19,11 +20,17 @@ interface Props {
  * Layout de que se muestra en todas las pantallas 
  * relacionadas con tareas 
 */
-const TasksLayout: FC<Props> = ({ children, title, openDrawer, headerContainerStyle }) => {
+const TasksLayout: FC<Props> = ({ children, title, openDrawer, style, headerContainerStyle }) => {
     const { height, width } = useWindowDimensions();
 
     return (
-        <View style={{ flex: 1, height: (height > width) ? height : width * 0.8 }}>
+        <View 
+            style={{ 
+                flex: 1,
+                height: (height > width) ? height : width * 0.8,
+                ...style as ViewStyle 
+            }}
+        >
             <View 
                 style={{ 
                     ...styles.headerContainer, 
@@ -36,7 +43,8 @@ const TasksLayout: FC<Props> = ({ children, title, openDrawer, headerContainerSt
                     title={ title }
                     /* Evaluación para aplicar estilo de vertical u horizontal */
                     styleTitleContainer={{ 
-                        top: (height > width) ? -120 : -170
+                        top: (height > width) ? -120 : -170,
+                        width: (height > width) ? width * 0.8 : 400,
                     }}
                     styleTitleText={{
                         top: (height > width) ? 120 : 160

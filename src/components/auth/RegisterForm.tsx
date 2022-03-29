@@ -55,9 +55,7 @@ export const RegisterForm = () => {
         <View 
             style={{ 
                 ...styles.formContainer, 
-                marginTop: (height > width) ? 0.35 * height : 0.25 * height,
-                maxHeight: (height > width) ? 0.65 * height : 0.65 * width,
-                minHeight: (height > width) ? 0.65 * height : 0.65 * width
+                marginBottom: (height > width) ? height * 0.09 : width * 0.02,
             }}
         >
             { /* Campo del Nombre */ }
@@ -108,6 +106,7 @@ const styles = StyleSheet.create({
     formContainer: {
         alignItems: 'center',
         flex: 1,
+        justifyContent: 'flex-end',
         zIndex: 3
     }
 });

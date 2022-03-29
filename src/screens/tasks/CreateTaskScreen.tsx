@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { DrawerScreenProps } from '@react-navigation/drawer';
@@ -27,21 +27,36 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
     const { taskStatus } = route.params;
 
     const { width, height } = useWindowDimensions();
+    const [ keyboardShow, setKeyboardShow ] = useState(false);
     const { selectedTask } = useTasks();
 
     return (
         <KeyboardAwareScrollView
-            style={{ flex: 1 }}
-            showsVerticalScrollIndicator={ false }
-            extraHeight={ 50 }
             enableOnAndroid
+            extraHeight={ 50 }
+            overScrollMode="never"
+            showsVerticalScrollIndicator={ false }
+            contentContainerStyle={{ flexGrow: (!keyboardShow) ? 1 : 0 }}
+            onKeyboardDidShow={ () => setKeyboardShow(true) }
+            onKeyboardDidHide={ () => setKeyboardShow(false) }
         >
             <TasksLayout
                 /* Evaluación para el título o nombre de la pantalla */
                 title={ (selectedTask?.id) ? 'Editar Tarea' : 'Crear Tarea' }
                 openDrawer={ () => navigation.openDrawer() }
                 headerContainerStyle={{ backgroundColor: 'transparent' }}
+                style={{ height: (height > width) ? undefined : width * 0.8 }}
             >
+
+                { /* Espaciador para cuando se abre el teclado */ }
+                <View 
+                    style={{ 
+                        height: (keyboardShow) 
+                            ? (height > width) ? height * 0.1615 : 0
+                            : 0 
+                    }} 
+                />
+
                 { /* Contenedor del formulario */ }
                 <View style={ styles.formContainer }>
 

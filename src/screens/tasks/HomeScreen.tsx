@@ -21,6 +21,7 @@ import { TasksStatus } from '../../interfaces/tasks';
 
 /* Theme */
 import { colors } from '../../theme/app-theme';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Option = 'all' | 'completed' | 'pending';
 
@@ -49,8 +50,6 @@ const HomeScreen = ({ navigation }: Props) => {
         loadSelectedTasks(option);
         setTaskStatus(option);
     }
-
-    
 
     /* useEffect para iniciar cargar de tareas */
     useEffect(() => {
@@ -94,7 +93,7 @@ const HomeScreen = ({ navigation }: Props) => {
                     ...styles.tasksOptionsBackground, 
                     backgroundColor: (height > width) ? colors.light : 'transparent', 
                     borderBottomWidth: (height > width) ? 2 : 0, 
-                    marginTop: (height > width) ? height * 0.215 : height * 0.3, 
+                    marginTop: (height > width) ? height * 0.20 : height * 0.3, 
                     top: (height > width) ? 0 : -height * 0.273,
                     right: (height > width) ? 0 : 70,
                     width: (height > width) ? width : width * 0.53,
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
     },
 
     tasksTotal: {
-        right: 50,
+        right: 30,
         position: 'absolute',
         zIndex: 2
     },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -18,21 +18,35 @@ interface Props extends StackScreenProps<any, any>{}
 /* Pantalla para que el usuario realice el registro */
 const RegisterScreen = ({ navigation }: Props) => {
     const { height, width } = useWindowDimensions();
+    const [ keyboardShow, setKeyboardShow ] = useState(false);
 
     return (
         <KeyboardAwareScrollView
-            style={{ flex: 1 }}
-            showsVerticalScrollIndicator={ false }
-            extraHeight={ 50 }
             enableOnAndroid
+            extraHeight={ 50 }
+            overScrollMode="never"
+            showsVerticalScrollIndicator={ false }
+            contentContainerStyle={{ flexGrow: (!keyboardShow) ? 1 : 0 }}
+            onKeyboardDidShow={ () => setKeyboardShow(true) }
+            onKeyboardDidHide={ () => setKeyboardShow(false) }
         >
             <AuthLayout
                 title="Registrar"
                 navigateBtnText="Ingresar"
                 colorBtn={ colors.light }
-                landscapeHeight={ 0.725 }
                 onPressNavigate={ () => navigation.navigate('LoginScreen') }
+                style={{ minHeight: (height > width) ? 750 : width * 0.725 }}
             >
+
+                { /* Espaciador para cuando se abre el teclado */ }
+                <View 
+                    style={{ 
+                        height: (keyboardShow) 
+                            ? (height > width) ? height * 0.3 : 0
+                            : 0 
+                        }} 
+                />
+
                 { /* Formulario */ }
                 <RegisterForm />
 

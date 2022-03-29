@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -23,6 +23,7 @@ interface Props extends DrawerScreenProps<any, any>{}
 /* Pantalla para mostrar la información del usuario */
 const ProfileScreen = ({ navigation }: Props) => {
     const { width, height } = useWindowDimensions();
+    const [ keyboardShow, setKeyboardShow ] = useState(false);
 
     const { signOut } = useAuth();
     const { removeTasks, removeSearchingTasks } = useTasks();
@@ -36,16 +37,30 @@ const ProfileScreen = ({ navigation }: Props) => {
 
     return (
         <KeyboardAwareScrollView
-            style={{ flex: 1 }}
-            showsVerticalScrollIndicator={ false }
-            extraHeight={ 50 }
             enableOnAndroid
+            extraHeight={ 50 }
+            overScrollMode="never"
+            showsVerticalScrollIndicator={ false }
+            contentContainerStyle={{ flexGrow: (!keyboardShow) ? 1 : 0 }}
+            onKeyboardDidShow={ () => setKeyboardShow(true) }
+            onKeyboardDidHide={ () => setKeyboardShow(false) }
         >    
             <TasksLayout
                 title="Perfil"
                 openDrawer={ () => navigation.openDrawer() }
                 headerContainerStyle={{ backgroundColor: 'transparent' }}
+                style={{ height: (height > width) ? undefined : width * 0.8 }}
             >
+
+                { /* Espaciador para cuando se abre el teclado */ }
+                <View 
+                    style={{ 
+                        height: (keyboardShow) 
+                            ? (height > width) ? height * 0.2475 : 0 
+                            : 0 
+                    }} 
+                />
+
                 { /* Formulario */ }
                 <ProfileForm />
 
