@@ -69,7 +69,7 @@ export const ProfileForm = () => {
         <View 
             style={{ 
                 ...styles.profileForm,
-                paddingBottom: (height > width) ? height * 0.08 : width * 0.05
+                paddingBottom: (height > width) ? height * 0.1 : width * 0.05,
             }}
         >
             {/* Campo de Imagen */}
@@ -128,7 +128,7 @@ export const ProfileForm = () => {
 const styles = StyleSheet.create({
     profileForm: {
         alignItems: 'center',
-        flex: 1, 
+        flex: 1,
         justifyContent: 'flex-end',
         zIndex: 2, 
     },

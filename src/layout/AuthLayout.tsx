@@ -18,15 +18,18 @@ const AuthLayout: FC<Props> = ({ title, onPressNavigate, navigateBtnText, colorB
     const { height, width } = useWindowDimensions();
 
     return (
-        <View style={{ flex: 1, ...style as ViewStyle }}>
-
+        <View 
+            style={{ 
+                flex: 1,
+                ...style as ViewStyle 
+            }}
+        >
             { /* Titulo o nombre de la screen */ }
             <ScreenTitle 
                 title={ title }
                 styleTitleContainer={{ 
                     top: (height > width) ? -120 : -150,
-                    width: 300,
-                    position: 'absolute',
+                    width: (height > width) ? width * 0.8 : 400
                 }}
                 styleTitleText={{
                     top: (height > width) ? 120 : 150,

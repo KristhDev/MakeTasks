@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, useWindowDimensions } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, useWindowDimensions, Dimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackScreenProps } from '@react-navigation/stack';
 
@@ -8,6 +8,9 @@ import AuthLayout from '../../layout/AuthLayout';
 
 /* Components */
 import { RegisterForm } from '../../components/auth/RegisterForm';
+
+/* Hooks */
+import useKeyboard from '../../hooks/useKeyboard';
 
 /* Theme */
 import { colors } from '../../theme/app-theme';
@@ -18,7 +21,8 @@ interface Props extends StackScreenProps<any, any>{}
 /* Pantalla para que el usuario realice el registro */
 const RegisterScreen = ({ navigation }: Props) => {
     const { height, width } = useWindowDimensions();
-    const [ keyboardShow, setKeyboardShow ] = useState(false);
+
+    const { setKeyboardShow, keyboardShow } = useKeyboard();
 
     return (
         <KeyboardAwareScrollView
@@ -26,7 +30,7 @@ const RegisterScreen = ({ navigation }: Props) => {
             extraHeight={ 50 }
             overScrollMode="never"
             showsVerticalScrollIndicator={ false }
-            contentContainerStyle={{ flexGrow: (!keyboardShow) ? 1 : 0 }}
+            contentContainerStyle={{ flexGrow: 1 }}
             onKeyboardDidShow={ () => setKeyboardShow(true) }
             onKeyboardDidHide={ () => setKeyboardShow(false) }
         >
@@ -35,18 +39,17 @@ const RegisterScreen = ({ navigation }: Props) => {
                 navigateBtnText="Ingresar"
                 colorBtn={ colors.light }
                 onPressNavigate={ () => navigation.navigate('LoginScreen') }
-                style={{ minHeight: (height > width) ? 750 : width * 0.725 }}
+                style={{ 
+                    flexGrow: 1,
+                    minHeight: (height > width) 
+                        ? '100%' 
+                        : width * 0.725,
+                    marginBottom: keyboardShow 
+                        ? (height > width) 
+                            ? (249 - (249 * 0.1)) : 392 * -0.35 
+                        : 0 
+                }}
             >
-
-                { /* Espaciador para cuando se abre el teclado */ }
-                <View 
-                    style={{ 
-                        height: (keyboardShow) 
-                            ? (height > width) ? height * 0.3 : 0
-                            : 0 
-                        }} 
-                />
-
                 { /* Formulario */ }
                 <RegisterForm />
 
@@ -56,9 +59,9 @@ const RegisterScreen = ({ navigation }: Props) => {
                         ...styles.background,
                         width: (height > width) ? width * 2 : height * 2.8,
                         marginTop: height * 0.24,
-                        height: (height > width) ? height * 0.9 : width * 0.7,
+                        height: (height > width) ? height * 0.9 : width * 0.75,
                         left: (height > width) ? -width * 0.3 : -height * 0.46,
-                        bottom: (height > width) ? -height * 0.16 : -width * 0.1,
+                        bottom: (height > width) ? -height * 0.16 : -width * 0.15,
                     }}
                 > 
                     { /* Fondo más pequeño */ }

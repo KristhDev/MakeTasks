@@ -58,7 +58,7 @@ export const LoginForm = () => {
     return (
         <View 
             style={{ 
-                ...styles.formContainer, 
+                ...styles.formContainer,
                 paddingBottom: (height > width) ? height * 0.14 : width * 0.05
             }}
         >

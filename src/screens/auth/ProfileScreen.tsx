@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -12,6 +12,7 @@ import { ProfileForm } from '../../components/auth/ProfileForm';
 
 /* Hooks */
 import useAuth from '../../hooks/useAuth';
+import useKeyboard from '../../hooks/useKeyboard';
 import useTasks from '../../hooks/useTasks';
 
 /* Theme */
@@ -23,9 +24,9 @@ interface Props extends DrawerScreenProps<any, any>{}
 /* Pantalla para mostrar la información del usuario */
 const ProfileScreen = ({ navigation }: Props) => {
     const { width, height } = useWindowDimensions();
-    const [ keyboardShow, setKeyboardShow ] = useState(false);
 
     const { signOut } = useAuth();
+    const { setKeyboardShow, keyboardShow } = useKeyboard();
     const { removeTasks, removeSearchingTasks } = useTasks();
 
     /* Función para desloguarse */
@@ -41,7 +42,7 @@ const ProfileScreen = ({ navigation }: Props) => {
             extraHeight={ 50 }
             overScrollMode="never"
             showsVerticalScrollIndicator={ false }
-            contentContainerStyle={{ flexGrow: (!keyboardShow) ? 1 : 0 }}
+            contentContainerStyle={{ flexGrow: 1 }}
             onKeyboardDidShow={ () => setKeyboardShow(true) }
             onKeyboardDidHide={ () => setKeyboardShow(false) }
         >    
@@ -49,18 +50,18 @@ const ProfileScreen = ({ navigation }: Props) => {
                 title="Perfil"
                 openDrawer={ () => navigation.openDrawer() }
                 headerContainerStyle={{ backgroundColor: 'transparent' }}
-                style={{ height: (height > width) ? undefined : width * 0.8 }}
+                style={{
+                    flexGrow: 1,
+                    height: (height > width) ? undefined : width * 0.8,
+                    minHeight: (height > width) 
+                        ? '100%' 
+                        : width * 0.65,
+                    marginBottom: keyboardShow 
+                        ? (height > width) 
+                            ? (249 - (249 * 0.35)) : height * -0.2
+                        : 0
+                }}
             >
-
-                { /* Espaciador para cuando se abre el teclado */ }
-                <View 
-                    style={{ 
-                        height: (keyboardShow) 
-                            ? (height > width) ? height * 0.2475 : 0 
-                            : 0 
-                    }} 
-                />
-
                 { /* Formulario */ }
                 <ProfileForm />
 
@@ -75,11 +76,11 @@ const ProfileScreen = ({ navigation }: Props) => {
                 <View 
                     style={{ 
                         ...styles.background,
-                        height: (height > width) ? height * 0.78 : width * 0.78,
+                        height: (height > width) ? height * 0.88 : width * 0.78,
                         left: -width * 0.25,
                         paddingTop: height * 0.04,
                         width: width * 1.5,
-                        bottom: -100,
+                        bottom: -180,
                     }}
                 />
             </TasksLayout>

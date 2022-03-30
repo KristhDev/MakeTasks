@@ -54,8 +54,8 @@ export const RegisterForm = () => {
     return (
         <View 
             style={{ 
-                ...styles.formContainer, 
-                marginBottom: (height > width) ? height * 0.09 : width * 0.02,
+                ...styles.formContainer,
+                paddingBottom: (height > width) ? height * 0.09 : width * 0.02,
             }}
         >
             { /* Campo del Nombre */ }
@@ -90,7 +90,7 @@ export const RegisterForm = () => {
             />
 
             { /* Espaciador */ }
-            <View style={{ marginTop: 55 }} />
+            <View style={{ marginTop: (height > width) ? 55 : 30 }} />
 
             { /* Botón de registro */ }
             <FormBtn 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, useWindowDimensions, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StackScreenProps } from '@react-navigation/stack';
 
@@ -8,6 +8,9 @@ import AuthLayout from '../../layout/AuthLayout';
 
 /* Components */
 import { LoginForm } from '../../components/auth/LoginForm';
+
+/* Hooks */
+import useKeyboard from '../../hooks/useKeyboard';
 
 /* Theme */
 import { colors } from '../../theme/app-theme';
@@ -18,7 +21,8 @@ interface Props extends StackScreenProps<any, any>{}
 /* Pantalla para que el usuario realice la autenticación */
 const LoginScreen = ({ navigation }: Props) => {
     const { height, width } = useWindowDimensions();
-    const [ keyboardShow, setKeyboardShow ] = useState(false);
+
+    const { setKeyboardShow, keyboardShow } = useKeyboard();
 
     return (
         <KeyboardAwareScrollView
@@ -26,7 +30,7 @@ const LoginScreen = ({ navigation }: Props) => {
             extraHeight={ 50 }
             overScrollMode="never"
             showsVerticalScrollIndicator={ false }
-            contentContainerStyle={{ flexGrow: (!keyboardShow) ? 1 : 0 }}
+            contentContainerStyle={{ flexGrow: 1 }}
             onKeyboardDidShow={ () => setKeyboardShow(true) }
             onKeyboardDidHide={ () => setKeyboardShow(false) }
         >
@@ -35,17 +39,17 @@ const LoginScreen = ({ navigation }: Props) => {
                 navigateBtnText="Crear cuenta"
                 colorBtn={ colors.lightRed }
                 onPressNavigate={ () => navigation.navigate('RegisterScreen') }
-                style={{ minHeight: (height > width) ? 750 : width * 0.65 }}
-            >   
-
-                { /* Espaciador para cuando se abre el teclado */ }
-                <View style={{ 
-                    height: (keyboardShow) 
-                        ? (height > width) ? height * 0.40 : 0
+                style={{ 
+                    flexGrow: 1,
+                    minHeight: (height > width) 
+                        ? '100%' 
+                        : width * 0.65,
+                    marginBottom: keyboardShow 
+                        ? (height > width) 
+                            ? (249 + (249 * 0.2)) : 392 * -0.25 
                         : 0 
-                    }} 
-                />
-
+                }}
+            >   
                 { /* Formulario */ }
                 <LoginForm />
 
@@ -53,10 +57,10 @@ const LoginScreen = ({ navigation }: Props) => {
                 <View 
                     style={{ 
                         ...styles.background,
-                        height: (height > width) ? height * 0.75 : width * 0.60,
+                        height: (height > width) ? height * 0.75 : width * 0.7,
                         left: (height > width) ? -width * 0.95 : -height * 0.40,	
-                        width: (height > width) ? width * 2.3 : height * 2.5,
-                        bottom: (height > width) ? -height * 0.10 : -width * 0.10,
+                        width: (height > width) ? width * 2.3 : height * 2.6,
+                        bottom: (height > width) ? -height * 0.10 : -width * 0.2,
                     }}
                 >
                     { /* Fondo más pequeño */ }
@@ -64,6 +68,7 @@ const LoginScreen = ({ navigation }: Props) => {
                         style={{
                             ...styles.backgroundBottom, 
                             right: (height > width) ? 110 : 40,
+                            bottom: (height > width) ? -130 : -70
                         }} 
                     />
                 </View>
@@ -78,17 +83,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightBlue,
         borderTopLeftRadius: 999,
         borderTopRightRadius: 999,
-        position: 'absolute'
+        position: 'absolute',
+        zIndex: -1
     },
 
     backgroundBottom: {
         backgroundColor: colors.light,
         borderTopLeftRadius: 999,
-        bottom: -110,
-        height: 320,
+        height: 360,
         position: 'absolute',
         transform: [{ rotate: '30deg' }],
-        width: 320
+        width: 360,
+        zIndex: -1
     }
 });
 

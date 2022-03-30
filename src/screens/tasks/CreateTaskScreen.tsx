@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { DrawerScreenProps } from '@react-navigation/drawer';
@@ -10,6 +10,7 @@ import TasksLayout from '../../layout/TasksLayout';
 import { TaskForm } from '../../components/tasks/TaskForm';
 
 /* Hooks */
+import useKeyboard from '../../hooks/useKeyboard';
 import useTasks from '../../hooks/useTasks';
 
 /* Navigators params */
@@ -27,7 +28,7 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
     const { taskStatus } = route.params;
 
     const { width, height } = useWindowDimensions();
-    const [ keyboardShow, setKeyboardShow ] = useState(false);
+    const { setKeyboardShow, keyboardShow } = useKeyboard();
     const { selectedTask } = useTasks();
 
     return (
@@ -36,7 +37,7 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
             extraHeight={ 50 }
             overScrollMode="never"
             showsVerticalScrollIndicator={ false }
-            contentContainerStyle={{ flexGrow: (!keyboardShow) ? 1 : 0 }}
+            contentContainerStyle={{ flexGrow: 1 }}
             onKeyboardDidShow={ () => setKeyboardShow(true) }
             onKeyboardDidHide={ () => setKeyboardShow(false) }
         >
@@ -45,18 +46,18 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
                 title={ (selectedTask?.id) ? 'Editar Tarea' : 'Crear Tarea' }
                 openDrawer={ () => navigation.openDrawer() }
                 headerContainerStyle={{ backgroundColor: 'transparent' }}
-                style={{ height: (height > width) ? undefined : width * 0.8 }}
+                style={{ 
+                    flexGrow: 1,
+                    height: (height > width) ? undefined : width * 0.8,
+                    minHeight: (height > width) 
+                        ? '100%' 
+                        : 392 * 0.65,
+                    marginBottom: keyboardShow 
+                        ? (height > width) 
+                            ? (249 - (249 * 0.5)) : width * 0.015
+                        : 0
+                }}
             >
-
-                { /* Espaciador para cuando se abre el teclado */ }
-                <View 
-                    style={{ 
-                        height: (keyboardShow) 
-                            ? (height > width) ? height * 0.1615 : 0
-                            : 0 
-                    }} 
-                />
-
                 { /* Contenedor del formulario */ }
                 <View style={ styles.formContainer }>
 
@@ -72,9 +73,9 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
                     style={{ 
                         ...styles.background,
                         width: (height > width) ? width * 2 : width * 1.6,
-                        marginLeft: (height > width) ? width * -0.25 : width * 0.05,
+                        marginLeft: (height > width) ? width * -0.25 : width * 0.08,
                         marginTop: height * 0.4,
-                        height: (height > width) ? height * 0.6 : height * 1.6
+                        height: (height > width) ? height * 0.6 : height * 1.8
                     }}
                 >
                     { /* Fondo más pequeño */ }
