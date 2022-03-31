@@ -6,7 +6,7 @@ import { createContext } from 'react';
 */
 
 /**
- * Este contexto se usa para manejar la información de permisos,
+ * Este contexto se usa para manejar la información del status,
  * se conforma de las siguientes propiedades:
  * 
  * msgSuccess: guarda el mensaje de éxito

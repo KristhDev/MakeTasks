@@ -9,7 +9,7 @@ import { Task, TasksStatus, NewTask } from '../../interfaces/tasks';
 */
 
 /**  
- * Este contexto se usa para manejar la información de autenticación,
+ * Este contexto se usa para manejar la información de tareas,
  * se conforma de las siguientes propiedades:
  *
  * tasks: sirve para guardar las tareas
