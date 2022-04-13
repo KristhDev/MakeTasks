@@ -41,6 +41,8 @@ export const ProfileForm = () => {
     const { image, handleTakeImageFromLibrary, setImage } = useImage();
     const { setMsgError } = useStatus();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     /* Función para actualizar el perfil del usuario */
     const handleSubmit = async () => {
         setIsBtnDisabled(true);
@@ -69,7 +71,7 @@ export const ProfileForm = () => {
         <View 
             style={{ 
                 ...styles.profileForm,
-                paddingBottom: (height > width) ? height * 0.1 : width * 0.05,
+                paddingBottom: (height > width) ? windowHeight * 0.1 : width * 0.05,
             }}
         >
             {/* Campo de Imagen */}

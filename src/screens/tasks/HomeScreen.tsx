@@ -21,7 +21,6 @@ import { TasksStatus } from '../../interfaces/tasks';
 
 /* Theme */
 import { colors } from '../../theme/app-theme';
-import { ScrollView } from 'react-native-gesture-handler';
 
 type Option = 'all' | 'completed' | 'pending';
 
@@ -38,6 +37,8 @@ const HomeScreen = ({ navigation }: Props) => {
 
     const { isAuthenticated, user } = useAuth();
     const { loadTasks, loadSelectedTasks, isTasksLoading, selectedTasks } = useTasks();
+
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
 
     /* Función para filtrar las tareas */
     const handleSelectOption = (option: Option) => {
@@ -74,14 +75,14 @@ const HomeScreen = ({ navigation }: Props) => {
             headerContainerStyle={{
                 borderBottomWidth: (height > width) ? 0 : 2,
                 borderBottomColor: colors.lightMediumGray,
-                maxHeight: (height > width) ? height * 0.3 : width * 0.16
+                maxHeight: (height > width) ? windowHeight * 0.3 : width * 0.16
             }}
         >
             { /* Contenedor para mostrar el total de tareas */ }
             <View 
                 style={{ 
                     ...styles.tasksTotal,
-                    top: (height > width) ? 125 : 88, 
+                    top: (height > width) ? 120 : 88, 
                 }}
             >
                 <Text style={  styles.tasksTotalText }>Total de tareas: { selectedTasks.length }</Text>
@@ -93,15 +94,19 @@ const HomeScreen = ({ navigation }: Props) => {
                     ...styles.tasksOptionsBackground, 
                     backgroundColor: (height > width) ? colors.light : 'transparent', 
                     borderBottomWidth: (height > width) ? 2 : 0, 
-                    marginTop: (height > width) ? height * 0.20 : height * 0.3, 
-                    top: (height > width) ? 0 : -height * 0.273,
+                    marginTop: (height > width) ? windowHeight * 0.21 : windowHeight * 0.3, 
+                    top: (height > width) ? 0 : -windowHeight * 0.273,
                     right: (height > width) ? 0 : 70,
                     width: (height > width) ? width : width * 0.53,
                 }}
             >
                 { /* Boton para ir a la pantalla de edición de perfil */ }
                 <TouchableOpacity 
-                    style={ styles.tasksImageProfile }
+                    style={{ 
+                        ...styles.tasksImageProfile,
+                        height: (width > 320) ? 55 : 45, 
+                        width: (width > 320) ? 55 : 45 
+                    }}
                     activeOpacity={ 0.8 }
                     onPress={ () => navigation.navigate('ProfileScreen') }
                 >
@@ -111,7 +116,10 @@ const HomeScreen = ({ navigation }: Props) => {
                                 ? { uri: user.image }
                                 : require('../../assets/default-user.jpg')
                         }
-                        style={{ height: 55, width: 55 }}
+                        style={{ 
+                            height: (width > 320) ? 55 : 45, 
+                            width: (width > 320) ? 55 : 45
+                        }}
                     />
                 </TouchableOpacity>
 
@@ -167,11 +175,11 @@ const HomeScreen = ({ navigation }: Props) => {
             <View 
                 style={{ 
                     ...styles.tasksBackground,
-                    height: (height > width) ? height * 0.65 : height * 2,
+                    height: (height > width) ? windowHeight * 0.65 : windowHeight * 2,
                     left: (height > width) ? -width * 0.5 : -width * 0.6,
-                    paddingTop: (height > width) ? height * 0.04 : width * 0.04,
+                    paddingTop: (height > width) ? windowHeight * 0.04 : width * 0.04,
                     width: (height > width) ? width * 2 : width * 2.2,
-                    bottom: (height > width) ? 0 : -height * 1.4,
+                    bottom: (height > width) ? 0 : -windowHeight * 1.4,
                 }}
             />
         </TasksLayout>
@@ -215,7 +223,6 @@ const styles = StyleSheet.create({
         borderColor: colors.light,
         borderWidth: 4,
         elevation: 6,
-        height: 55, 
         justifyContent: 'center', 
         marginLeft: 16.5, 
         overflow: 'hidden', 
@@ -226,7 +233,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.30,
         shadowRadius: 6.25,
-        width: 55
     },
 
     tasksOptions: {

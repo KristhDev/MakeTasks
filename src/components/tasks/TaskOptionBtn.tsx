@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
 
 /* Theme */
 import { colors } from '../../theme/app-theme';
@@ -13,6 +13,8 @@ interface Props {
 
 /* Componente que muestra un boton de opción para filtrar las tareas */
 export const TaskOptionBtn = ({ isAcitve, text, onPress, }: Props) => {
+    const { width } = useWindowDimensions();
+
     return (
         <TouchableOpacity  
             activeOpacity={ 1 } 
@@ -28,8 +30,17 @@ export const TaskOptionBtn = ({ isAcitve, text, onPress, }: Props) => {
                 style={ 
                     /* Evaluación para mostrar como activo el texto del boton */
                     (isAcitve) 
-                        ? { ...styles.taskOptionsText, ...styles.taskOptionsTextActive } 
-                        : styles.taskOptionsText 
+                        ? { 
+                            ...styles.taskOptionsText, 
+                            ...styles.taskOptionsTextActive,
+                            fontSize: (width > 320) ? 17 : 14, 
+                            paddingVertical: (width > 320) ? 15 : 10
+                        } 
+                        : { 
+                            ...styles.taskOptionsText,
+                            fontSize: (width > 320) ? 17 : 14, 
+                            paddingVertical: (width > 320) ? 15 : 10
+                        }
                 }
             >
                 { text }
@@ -51,8 +62,6 @@ const styles = StyleSheet.create({
 
     taskOptionsText: {
         color: '#000',
-        fontSize: 17,
-        paddingVertical: 15,
         marginBottom: 2,
         textAlign: 'center'
     },

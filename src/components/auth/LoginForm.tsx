@@ -34,6 +34,8 @@ export const LoginForm = () => {
     const { setMsgError } = useStatus();
     const { form, onChangeField, resetForm } = useForm({ email: '', password: '' });
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     /* Función para realizar la autenticación */
     const handleSubmit = async () => {
         try {
@@ -59,7 +61,7 @@ export const LoginForm = () => {
         <View 
             style={{ 
                 ...styles.formContainer,
-                paddingBottom: (height > width) ? height * 0.14 : width * 0.05
+                paddingBottom: (height > width) ? windowHeight * 0.14 : width * 0.05
             }}
         >
             { /* Campo de Correo */ }

@@ -34,6 +34,8 @@ export const RegisterForm = () => {
     const { setMsgError } = useStatus();
     const { form, onChangeField} = useForm({ name: '', email: '', password: '' });
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     /** 
      * Función para realizar el registro y autenticación.
      * En este caso no es necesario realizar reseteo del formulario porque el 
@@ -55,7 +57,7 @@ export const RegisterForm = () => {
         <View 
             style={{ 
                 ...styles.formContainer,
-                paddingBottom: (height > width) ? height * 0.09 : width * 0.02,
+                paddingBottom: (height > width) ? windowHeight * 0.09 : width * 0.02,
             }}
         >
             { /* Campo del Nombre */ }

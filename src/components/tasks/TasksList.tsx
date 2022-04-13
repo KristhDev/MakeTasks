@@ -25,6 +25,8 @@ export const TasksList = ({ taskStatus, tasksType }: Props) => {
 
     const { selectedTasks, searchingTasks } = useTasks();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     /**  
      * Objeto que contiene los tipos de tareas que seran selccionadas
      * por la propiedad tasksType 
@@ -42,7 +44,7 @@ export const TasksList = ({ taskStatus, tasksType }: Props) => {
         >
             <View style={{ ...styles.tasksLists, width, paddingRight: 1.2 }}>
                 {/* Espaciador */}
-                <View style={{ marginTop: height * 0.14 }} />
+                <View style={{ marginTop: windowHeight * 0.14 }} />
 
                 {
                     tasks[tasksType].map((task) => 

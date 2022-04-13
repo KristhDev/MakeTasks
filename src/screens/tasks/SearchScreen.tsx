@@ -27,6 +27,8 @@ const SearchScreen = ({ navigation }: Props) => {
 
     const { searchTasks, selectedTask, searchingTasks, isTasksLoading, removeSearchingTasks } = useTasks();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     /* Función para hacer la busqueda de tareas */
     const handleSearch = () => {
         Keyboard.dismiss();
@@ -57,7 +59,16 @@ const SearchScreen = ({ navigation }: Props) => {
             headerContainerStyle={{
                 borderBottomColor: colors.lightMediumGray,
                 borderBottomWidth: 2,
-                maxHeight: (height > width) ? height * 0.25 : height * 0.4,
+                maxHeight: (height > width) ? windowHeight * 0.25 : windowHeight * 0.4,
+            }}
+            style={{
+                flexGrow: 1,
+                height: (height > width) 
+                    ? (height >= 720 && height > width) ? undefined : 720 
+                    : width * 0.8,
+                minHeight: (height > width) 
+                    ? (height >= 720 && height > width) ? undefined : 720 
+                    : 392 * 0.65
             }}
         >
             <View style={{ ...styles.container }}>
@@ -85,9 +96,9 @@ const SearchScreen = ({ navigation }: Props) => {
                 <View 
                     style={{ 
                         ...styles.tasksBackground,
-                        height: (height > width) ? height * 0.70 : height,
+                        height: (height > width) ? windowHeight * 0.70 : windowHeight,
                         left: (height > width) ? -width * 0.5 : -width * 0.2,
-                        paddingTop: (height > width) ? height * 0.04 : width * 0.04,
+                        paddingTop: (height > width) ? windowHeight * 0.04 : width * 0.04,
                         width: (height > width) ? width * 2 : width * 1.4,
                         bottom: (height > width) ? 0 : -width * 0.3,
                     }}

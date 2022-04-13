@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight, useWindowDimensions, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -22,6 +22,7 @@ interface Props {
 /* Componente para mostrar cada Item de la lista de tareas */
 export const TaskItem = ({ task, taskStatus }: Props) => {
     const { navigate } = useNavigation();
+    const { width } = useWindowDimensions();
 
     const { setSelectedTask, toggleTaskCompeted } = useTasks();
 
@@ -51,18 +52,27 @@ export const TaskItem = ({ task, taskStatus }: Props) => {
                 <TouchableHighlight 
                     activeOpacity={ 1 }
                     onPress={ handleGoToEditTask }
-                    style={ styles.taskTitleBox } 
+                    style={{ 
+                        ...styles.taskTitleBox,
+                        height: (width > 320) ? 60 : 50,
+                        width: (width > 320) ? 60 : 50
+                    }} 
                     underlayColor={ colors.darkRed }
                 >
                     <Icon 
                         name="pencil-outline"
-                        size={ 30 }
+                        size={ (width > 320) ? 30 : 25 }
                         color={ colors.light }
                     />
                 </TouchableHighlight>
 
                 { /* Titulo de la tarea */ }
-                <Text style={ styles.taskTitle }>
+                <Text 
+                    style={{ 
+                        ...styles.taskTitle,
+                        fontSize: (width > 320) ? 20 : 17,
+                    }}
+                >
                     { (task.title.length > 17) ? task.title.slice(0, 17) + '...' : task.title }
                 </Text>
 
@@ -160,14 +170,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.lightRed,
-        borderRadius: 20,
-        width: 60,
-        height: 60,
+        borderRadius: 20
     },
 
     taskTitle: {
         color: colors.darkBlue,
-        fontSize: 20,
         fontWeight: 'bold',
         flex: 1,
         marginLeft: 20,

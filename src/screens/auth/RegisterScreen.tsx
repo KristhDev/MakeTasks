@@ -24,6 +24,8 @@ const RegisterScreen = ({ navigation }: Props) => {
 
     const { setKeyboardShow, keyboardShow } = useKeyboard();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     return (
         <KeyboardAwareScrollView
             enableOnAndroid
@@ -42,7 +44,7 @@ const RegisterScreen = ({ navigation }: Props) => {
                 style={{ 
                     flexGrow: 1,
                     minHeight: (height > width) 
-                        ? '100%' 
+                        ? (height >= 720 && height > width) ? '100%' : 720
                         : width * 0.725,
                     marginBottom: keyboardShow 
                         ? (height > width) 
@@ -57,11 +59,11 @@ const RegisterScreen = ({ navigation }: Props) => {
                 <View 
                     style={{ 
                         ...styles.background,
-                        width: (height > width) ? width * 2 : height * 2.8,
-                        marginTop: height * 0.24,
-                        height: (height > width) ? height * 0.9 : width * 0.75,
-                        left: (height > width) ? -width * 0.3 : -height * 0.46,
-                        bottom: (height > width) ? -height * 0.16 : -width * 0.15,
+                        width: (height > width) ? width * 2 : windowHeight * 2.8,
+                        marginTop: windowHeight * 0.24,
+                        height: (height > width) ? windowHeight * 0.9 : width * 0.75,
+                        left: (height > width) ? -width * 0.3 : -windowHeight * 0.46,
+                        bottom: (height > width) ? -windowHeight * 0.16 : -width * 0.15,
                     }}
                 > 
                     { /* Fondo más pequeño */ }

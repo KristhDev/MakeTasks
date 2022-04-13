@@ -23,18 +23,20 @@ interface Props {
 const TasksLayout: FC<Props> = ({ children, title, openDrawer, style, headerContainerStyle }) => {
     const { height, width } = useWindowDimensions();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     return (
         <View 
             style={{ 
                 flex: 1,
-                height: (height > width) ? height : width * 0.8,
+                height: (height > width) ? windowHeight : width * 0.8,
                 ...style as ViewStyle 
             }}
         >
             <View 
                 style={{ 
                     ...styles.headerContainer, 
-                    maxHeight: (height > width) ? height * 0.3 : width * 0.2,
+                    maxHeight: (height > width) ? windowHeight * 0.3 : width * 0.2,
                     ...headerContainerStyle as ViewStyle
                 }}
             >

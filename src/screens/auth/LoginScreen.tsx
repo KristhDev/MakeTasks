@@ -24,6 +24,8 @@ const LoginScreen = ({ navigation }: Props) => {
 
     const { setKeyboardShow, keyboardShow } = useKeyboard();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     return (
         <KeyboardAwareScrollView
             enableOnAndroid
@@ -42,7 +44,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 style={{ 
                     flexGrow: 1,
                     minHeight: (height > width) 
-                        ? '100%' 
+                        ? (height >= 720 && height > width) ? '100%' : 720 
                         : width * 0.65,
                     marginBottom: keyboardShow 
                         ? (height > width) 
@@ -57,10 +59,10 @@ const LoginScreen = ({ navigation }: Props) => {
                 <View 
                     style={{ 
                         ...styles.background,
-                        height: (height > width) ? height * 0.75 : width * 0.7,
-                        left: (height > width) ? -width * 0.95 : -height * 0.40,	
-                        width: (height > width) ? width * 2.3 : height * 2.6,
-                        bottom: (height > width) ? -height * 0.10 : -width * 0.2,
+                        height: (height > width) ? windowHeight * 0.75 : width * 0.7,
+                        left: (height > width) ? -width * 0.95 : -windowHeight * 0.40,	
+                        width: (height > width) ? width * 2.3 : windowHeight * 2.6,
+                        bottom: (height > width) ? -windowHeight * 0.10 : -width * 0.2,
                     }}
                 >
                     { /* Fondo más pequeño */ }

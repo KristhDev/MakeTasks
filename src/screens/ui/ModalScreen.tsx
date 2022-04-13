@@ -32,7 +32,7 @@ const ModalScreen: FC<Props> = ({ isVisible, modalOpacity = 0.5, children }) => 
                     <View style={ styles.modalBackgroundTop } />
 
                     { /* Título del modal */ }
-                    <View style={ styles.modalTitle }>
+                    <View>
                         <Text style={ styles.modalTitleText }>MakeTasks</Text>
                     </View>
 
@@ -71,10 +71,6 @@ const styles = StyleSheet.create({
         top: -30,
         transform: [{ rotate: '-25deg' }],
         width: 100,
-    },
-
-    modalTitle: {
-        
     },
 
     modalTitleText: {

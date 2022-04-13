@@ -29,6 +29,8 @@ const ProfileScreen = ({ navigation }: Props) => {
     const { setKeyboardShow, keyboardShow } = useKeyboard();
     const { removeTasks, removeSearchingTasks } = useTasks();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     /* Función para desloguarse */
     const handleSignOut = () => {
         signOut();
@@ -52,13 +54,15 @@ const ProfileScreen = ({ navigation }: Props) => {
                 headerContainerStyle={{ backgroundColor: 'transparent' }}
                 style={{
                     flexGrow: 1,
-                    height: (height > width) ? undefined : width * 0.8,
+                    height: (height > width) 
+                        ? (height >= 720 && height > width) ? undefined : 720
+                        : width * 0.8,
                     minHeight: (height > width) 
-                        ? '100%' 
+                        ? (height >= 720 && height > width) ? '100%' : 720 
                         : width * 0.65,
                     marginBottom: keyboardShow 
                         ? (height > width) 
-                            ? (249 - (249 * 0.35)) : height * -0.2
+                            ? (249 - (249 * 0.35)) : windowHeight * -0.2
                         : 0
                 }}
             >
@@ -76,9 +80,9 @@ const ProfileScreen = ({ navigation }: Props) => {
                 <View 
                     style={{ 
                         ...styles.background,
-                        height: (height > width) ? height * 0.88 : width * 0.78,
+                        height: (height > width) ? windowHeight * 0.88 : width * 0.78,
                         left: -width * 0.25,
-                        paddingTop: height * 0.04,
+                        paddingTop: windowHeight * 0.04,
                         width: width * 1.5,
                         bottom: -180,
                     }}

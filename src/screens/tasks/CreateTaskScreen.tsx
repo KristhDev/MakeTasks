@@ -31,6 +31,8 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
     const { setKeyboardShow, keyboardShow } = useKeyboard();
     const { selectedTask } = useTasks();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     return (
         <KeyboardAwareScrollView
             enableOnAndroid
@@ -48,9 +50,11 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
                 headerContainerStyle={{ backgroundColor: 'transparent' }}
                 style={{ 
                     flexGrow: 1,
-                    height: (height > width) ? undefined : width * 0.8,
+                    height: (height > width) 
+                        ? (height >= 720 && height > width) ? undefined : 720 
+                        : width * 0.8,
                     minHeight: (height > width) 
-                        ? '100%' 
+                        ? (height >= 720 && height > width) ? '100%' : 720 
                         : 392 * 0.65,
                     marginBottom: keyboardShow 
                         ? (height > width) 
@@ -74,8 +78,8 @@ const CreateTaskScreen = ({ route, navigation }: Props) => {
                         ...styles.background,
                         width: (height > width) ? width * 2 : width * 1.6,
                         marginLeft: (height > width) ? width * -0.25 : width * 0.08,
-                        marginTop: height * 0.4,
-                        height: (height > width) ? height * 0.6 : height * 1.8
+                        marginTop: windowHeight * 0.4,
+                        height: (height > width) ? windowHeight * 0.6 : windowHeight * 1.8
                     }}
                 >
                     { /* Fondo más pequeño */ }

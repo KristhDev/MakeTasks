@@ -59,6 +59,8 @@ export const TaskForm = ({ taskStatus, navigation }: Props) => {
     const { setMsgError } = useStatus();
     const { selectedTask, createTask, removeSelectedTask, updateTask } = useTasks();
 
+    const windowHeight = (height >= 720 && height > width) ? height : 720;
+
     /* Función para crear o actualizar una tarea */
     const handleSubmit = async () => {
         setIsBtnDisabled(true);
@@ -124,9 +126,9 @@ export const TaskForm = ({ taskStatus, navigation }: Props) => {
             <View 
                 style={{ 
                     ...styles.form,
-                    bottom: height * 0.14,
-                    top: (height > width) ? -height * 0.04 : -height * 0.1,
-                    minHeight: (height > width) ? height * 0.8 : height * 1.20,
+                    bottom: windowHeight * 0.14,
+                    top: (height > width) ? -windowHeight * 0.04 : -windowHeight * 0.1,
+                    minHeight: (height > width) ? windowHeight * 0.8 : windowHeight * 1.20,
                 }}
             >
                 { /* Campo de título */ }
